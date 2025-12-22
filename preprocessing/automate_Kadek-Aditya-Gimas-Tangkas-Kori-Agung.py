@@ -68,7 +68,7 @@ def preprocess_data(
 
 if __name__ == "__main__":
     INPUT_PATH = "../loan_approval_dataset_raw.csv"
-    OUTPUT_PATH = "loan_approval_preprocessed.csv"
+    OUTPUT_PATH = "loan_approval_preprocessing.csv"
 
     preprocess_data(INPUT_PATH, OUTPUT_PATH)
     print("Preprocessing selesai")
