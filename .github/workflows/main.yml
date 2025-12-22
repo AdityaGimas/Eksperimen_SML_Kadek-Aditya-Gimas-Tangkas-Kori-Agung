@@ -1,0 +1,38 @@
+name: Automated Preprocessing Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  preprocessing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy scikit-learn
+
+      - name: Run preprocessing script
+        run: |
+          cd preprocessing
+          python automate_Kadek-Aditya-Gimas-Tangkas-Kori-Agung.py
+
+      - name: Commit and push processed dataset
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add preprocessing/loan_approval_preprocessed.csv
+          git commit -m "Update preprocessed dataset (auto)" || echo "No changes to commit"
+          git push
