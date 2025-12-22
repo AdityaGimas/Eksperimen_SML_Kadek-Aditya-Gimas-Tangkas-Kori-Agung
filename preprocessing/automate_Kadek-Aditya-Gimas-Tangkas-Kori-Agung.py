@@ -4,18 +4,12 @@ from sklearn.preprocessing import StandardScaler
 
 
 def load_data(path: str) -> pd.DataFrame:
-    """
-    Load dataset 
-    """
     df = pd.read_csv(path)
     df.columns = df.columns.str.strip()
     return df
 
 
 def handle_outliers(df: pd.DataFrame, numerical_features: list) -> pd.DataFrame:
-    """
-    Menangani outlier menggunakan metode IQR 
-    """
     for col in numerical_features:
         Q1 = df[col].quantile(0.25)
         Q3 = df[col].quantile(0.75)
@@ -30,9 +24,6 @@ def handle_outliers(df: pd.DataFrame, numerical_features: list) -> pd.DataFrame:
 
 
 def encode_categorical(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Encoding fitur kategorikal secara manual
-    """
     education_map = {'Not Graduate': 0, 'Graduate': 1}
     self_employed_map = {'No': 0, 'Yes': 1}
     loan_status_map = {'Rejected': 0, 'Approved': 1}
@@ -45,9 +36,6 @@ def encode_categorical(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def scale_numerical(df: pd.DataFrame, numerical_features: list) -> pd.DataFrame:
-    """
-    Standarisasi fitur numerik menggunakan StandardScaler
-    """
     scaler = StandardScaler()
     df[numerical_features] = scaler.fit_transform(df[numerical_features])
     return df
@@ -57,10 +45,6 @@ def preprocess_data(
     input_path: str,
     output_path: str
 ) -> pd.DataFrame:
-    """
-    Pipeline preprocessing lengkap:
-    load -> outlier -> encoding -> scaling -> save
-    """
     numerical_features = [
         "no_of_dependents",
         "income_annum",
@@ -87,4 +71,4 @@ if __name__ == "__main__":
     OUTPUT_PATH = "loan_approval_preprocessed.csv"
 
     preprocess_data(INPUT_PATH, OUTPUT_PATH)
-    print("✅ Preprocessing selesai. Dataset siap dilatih.")
+    print("Preprocessing selesai")
